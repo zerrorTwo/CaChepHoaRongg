@@ -12,6 +12,8 @@ import matplotlib.pyplot as plt
 from collections import defaultdict
 from .q_learning.qlearning import QLearning
 from .algorithms.node import Node
+import csv
+import os
 
 class Game:
     def __init__(self, display_game=True):
@@ -197,8 +199,20 @@ class Game:
                 score, moves, time_taken = self.run_algorithm(i)
                 score = max(1, score)  
                 stats[i]["scores"].append(score)
-                stats[i]["moves"].append(moves )  
+                stats[i]["moves"].append(moves)  
                 stats[i]["time"].append(time_taken)  
+
+        # Tạo thư mục 'reports' trong 'src' nếu chưa tồn tại
+        if not os.path.exists('src/reports'):
+            os.makedirs('src/reports')
+
+        # Ghi dữ liệu vào file CSV trong thư mục 'src/reports'
+        with open('src/reports/report.csv', mode='w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["Algorithm", "Run", "Score", "Moves", "Time"])
+            for algo in algorithms:
+                for run, (score, moves, time) in enumerate(zip(stats[algo]["scores"], stats[algo]["moves"], stats[algo]["time"]), start=1):
+                    writer.writerow([algo, run, score, moves, time])
 
         fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 5))
         fig.suptitle("Hiệu suất các thuật toán")

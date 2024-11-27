@@ -6,8 +6,8 @@ SCREEN_HEIGHT = 720
 WINDOW_SIZE = SCREEN_WIDTH
 
 # Kích thước grid
-# 60
-GRIDSIZE = 60
+# 40
+GRIDSIZE = 40
 GRID_WIDTH = int(SCREEN_HEIGHT / GRIDSIZE)
 GRID_HEIGHT = int(SCREEN_WIDTH / GRIDSIZE)
 
@@ -26,7 +26,7 @@ GRID_COLOR2 = (35, 39, 42)
 SNAKE_HEAD_COLOR = (230, 0, 255)
 SNAKE_BODY_COLOR = (240, 240, 240)
 SNAKE_BORDER = (93, 216, 228)
-FOOD_COLOR = (114, 137, 218)
+FOOD_COLOR = (154, 191, 128)
 OBSTACLE_COLOR = (255, 0, 0)
 
 # Grid states
@@ -42,7 +42,7 @@ OBSTACLE = 0  # số lương vật cản
 FPS = 120
 
 # Số lần so sánh
-NUM_COMPARE = 5
+NUM_COMPARE = 10
 
 def init_grid():
     """Khởi tạo grid trống"""
