@@ -19,9 +19,17 @@ class Menu:
         buttons = {}
         y_offset = SCREEN_HEIGHT // 2 - 120
 
+        # Tải ảnh nền
+        background_image = pygame.image.load('assets/background.jpg')
+        
+        # Tính toán vị trí để vẽ ảnh nền ở giữa
+        bg_rect = background_image.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+        
         running = True
         while running:
-
+            # Vẽ ảnh nền ở giữa
+            screen.blit(background_image, bg_rect.topleft)
+            
             for algo, text in algorithms.items():
                 button_text = button_font.render(text, True, WHITE)
                 button = pygame.Rect(
@@ -52,6 +60,15 @@ class Menu:
 
     @staticmethod
     def show_pause_menu(screen):
+        # Tải ảnh nền
+        background_image = pygame.image.load('assets/background.jpg')
+        
+        # Tính toán vị trí để vẽ ảnh nền ở giữa
+        bg_rect = background_image.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+        
+        # Vẽ ảnh nền ở giữa
+        screen.blit(background_image, bg_rect.topleft)
+
         font = pygame.font.SysFont("monospace", 32)
 
         text = font.render("Game Paused!", True, WHITE)
@@ -66,7 +83,7 @@ class Menu:
         restart_button = pygame.Rect(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 50, 200, 50)
         pygame.draw.rect(screen, ORANGE, restart_button)
         screen.blit(restart_text, restart_text.get_rect(center=restart_button.center))
-
+        
         pygame.display.update()
 
         return continue_button, restart_button

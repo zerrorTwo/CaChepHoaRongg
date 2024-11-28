@@ -36,7 +36,7 @@ FOOD = 2 # chỉ số định danh trạng thái thức ăn
 SNAKE_HEAD = 3 # chỉ số định danh trạng thái đầu con rắn
 SNAKE_TAIL = 4 # chỉ số định danh trạng thái đuôi con rắn
 
-OBSTACLE = 0  # số lương vật cản
+OBSTACLE = 20 # số lương vật cản
 
 # FPS
 FPS = 120

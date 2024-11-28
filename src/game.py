@@ -56,6 +56,13 @@ class Game:
                 if not self.handle_events():
                     break
                 if not self.update(algorithm):
+                    # Hiển thị "Game Over" lên UI với kích thước font lớn hơn
+                    self.surface.fill(BLACK)
+                    game_over_font = pygame.font.SysFont("monospace", 40, bold=True)  # Thay đổi kích thước font
+                    game_over_text = game_over_font.render("Game Over!!", True, (255, 0, 0))
+                    self.screen.blit(game_over_text, (SCREEN_WIDTH // 2 - game_over_text.get_width() // 2, SCREEN_HEIGHT // 2))
+                    pygame.display.update()
+                    pygame.time.wait(2000)  # Đợi 3 giây
                     break
                 self.draw()
 
@@ -72,8 +79,23 @@ class Game:
         score_text = self.font.render(f"Score {self.score}", True, (235, 91, 0))
         self.screen.blit(score_text, (5, 10))
         
-        name1_text = self.font.render("22110184 Lê Quốc Nam", True, (235, 91, 0))
-        name2_text = self.font.render("22110187 Lê Chí Nghĩa", True, (235, 91, 0))
+        # Màu cầu vồng
+        rainbow_colors = [
+            (255, 0, 0),    # Red
+            (255, 127, 0),  # Orange
+            (255, 255, 0),  # Yellow
+            (0, 255, 0),    # Green
+            (0, 0, 255),    # Blue
+            (75, 0, 130),   # Indigo
+            (148, 0, 211)   # Violet
+        ]
+        
+        # Tính toán màu sắc hiện tại dựa trên thời gian
+        color_index = (pygame.time.get_ticks() // 1000) % len(rainbow_colors)
+        current_color = rainbow_colors[color_index]
+        
+        name1_text = self.font.render("22110184 Lê Quốc Nam", True, current_color)
+        name2_text = self.font.render("22110187 Lê Chí Nghĩa", True, current_color)
         self.screen.blit(name1_text, (5, 40)) 
         self.screen.blit(name2_text, (5, 70))  
         

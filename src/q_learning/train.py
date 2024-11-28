@@ -5,7 +5,7 @@ from ..constants import *
 import numpy as np
 import pygame
 import os
-
+import time
 
 def train():
     # Tạo đường dẫn đến thư mục models
@@ -34,9 +34,9 @@ def train():
         total_reward = 0
 
         for step in range(max_steps):
-            game.draw()
-            pygame.display.flip()
-            #    time.sleep(0.05)
+            # game.draw()
+            # pygame.display.flip()
+            # time.sleep(0.05)
 
             action = agent.get_action(state)
 
