@@ -8,15 +8,18 @@ import os
 
 
 class QLearning:
-    def __init__(self, size_of_state, size_of_action):
+    def __init__(self, size_of_state, size_of_action, with_obstacles=False):
         self.size_of_state = size_of_state
         self.size_of_action = size_of_action
         self.learning_rate = 0.1  # tỷ lệ học
-        self.discount_factor = 0.95  # hệ số giảm giá
+        self.discount_factor = 0.95  # hệ số giảm 
         self.epsilon = 0.1  # tỷ lệ khám phá ngẫu nhiên
-
+        self.with_obstacles = with_obstacles
         # Tạo thư mục models nếu chưa tồn tại
-        self.model_dir = os.path.join(os.path.dirname(__file__), "models")
+        if with_obstacles:
+            self.model_dir = os.path.join(os.path.dirname(__file__), "modelsObstacle")
+        else:
+            self.model_dir = os.path.join(os.path.dirname(__file__), "models")
         os.makedirs(self.model_dir, exist_ok=True)
 
         # Tìm file q_table có điểm số cao nhất
@@ -100,13 +103,31 @@ class QLearning:
             elif (next_x * GRIDSIZE, next_y * GRIDSIZE) in game.snake.positions[1:]:
                 array_consider[i] = 1
 
-        state = (
-            array_consider[0] * 1
-            + array_consider[1] * 2
-            + array_consider[2] * 4
-            + array_consider[3] * 8
-            + (food_dir_x + 1) * 16
-            + (food_dir_y + 1) * 48
+        # Thêm thông tin về chướng ngại vật vào trạng thái
+        obstacle_state = sum(
+            2**i for i, pos in enumerate(game.obstacles.positions)
+            if (head_x, head_y) == (pos[0] // GRIDSIZE, pos[1] // GRIDSIZE)
         )
+
+        if self.with_obstacles:
+
+            state = (
+                array_consider[0] * 1
+                + array_consider[1] * 2
+                + array_consider[2] * 4
+                + array_consider[3] * 8
+                + (food_dir_x + 1) * 16
+                + (food_dir_y + 1) * 48
+                + obstacle_state * 144  # Thêm thông tin chướng ngại vật
+            )
+        else:
+            state = (
+                array_consider[0] * 1
+                + array_consider[1] * 2
+                + array_consider[2] * 4
+                + array_consider[3] * 8
+                + (food_dir_x + 1) * 16
+                + (food_dir_y + 1) * 48
+            )
 
         return state

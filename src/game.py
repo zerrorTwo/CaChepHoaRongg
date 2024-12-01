@@ -60,9 +60,22 @@ class Game:
                     self.surface.fill(BLACK)
                     game_over_font = pygame.font.SysFont("monospace", 40, bold=True)  # Thay đổi kích thước font
                     game_over_text = game_over_font.render("Game Over!!", True, (255, 0, 0))
+                    press_space_text = self.font.render("Press Space to Restart", True, (255, 255, 255))
                     self.screen.blit(game_over_text, (SCREEN_WIDTH // 2 - game_over_text.get_width() // 2, SCREEN_HEIGHT // 2))
+                    self.screen.blit(press_space_text, (SCREEN_WIDTH // 2 - press_space_text.get_width() // 2, SCREEN_HEIGHT // 2 + 50))
                     pygame.display.update()
-                    pygame.time.wait(2000)  # Đợi 3 giây
+                    
+                    # Chờ người chơi nhấn phím Space
+                    waiting_for_restart = True
+                    while waiting_for_restart:
+                        for event in pygame.event.get():
+                            if event.type == pygame.QUIT:
+                                pygame.quit()
+                                sys.exit()
+                            elif event.type == pygame.KEYDOWN:
+                                if event.key == pygame.K_SPACE:
+                                    waiting_for_restart = False
+                                    break
                     break
                 self.draw()
 
