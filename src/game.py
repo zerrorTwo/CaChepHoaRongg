@@ -60,9 +60,20 @@ class Game:
                     self.surface.fill(BLACK)
                     game_over_font = pygame.font.SysFont("monospace", 40, bold=True)  # Thay đổi kích thước font
                     game_over_text = game_over_font.render("Game Over!!", True, (255, 0, 0))
-                    self.screen.blit(game_over_text, (SCREEN_WIDTH // 2 - game_over_text.get_width() // 2, SCREEN_HEIGHT // 2))
+                    self.screen.blit(game_over_text, (SCREEN_WIDTH // 2 - game_over_text.get_width() // 2, SCREEN_HEIGHT // 2 - 20))
+                    continue_font = pygame.font.SysFont("monospace", 30, bold=True)
+                    continue_text = continue_font.render("Press Space to Continue", True, (255, 255, 255))
+                    self.screen.blit(continue_text, (SCREEN_WIDTH // 2 - continue_text.get_width() // 2, SCREEN_HEIGHT // 2 + 20))
                     pygame.display.update()
-                    pygame.time.wait(2000)  # Đợi 3 giây
+                    space = True
+                    while space:
+                        for event in pygame.event.get():
+                            if event.type == pygame.QUIT:
+                                pygame.quit()
+                                sys.exit()
+                            elif event.type == pygame.KEYDOWN:
+                                if event.key == pygame.K_SPACE:
+                                    space = False
                     break
                 self.draw()
 
@@ -81,19 +92,17 @@ class Game:
         
         # Màu cầu vồng
         rainbow_colors = [
-            (255, 0, 0),    # Red
-            (255, 127, 0),  # Orange
-            (255, 255, 0),  # Yellow
-            (0, 255, 0),    # Green
-            (0, 0, 255),    # Blue
-            (75, 0, 130),   # Indigo
-            (148, 0, 211)   # Violet
+            (255, 0, 0),    
+            (255, 127, 0),  
+            (255, 255, 0),  
+            (0, 255, 0),    
+            (0, 0, 255),    
+            (75, 0, 130),   
+            (148, 0, 211)   
         ]
         
-        # Tính toán màu sắc hiện tại dựa trên thời gian
         color_index = (pygame.time.get_ticks() // 1000) % len(rainbow_colors)
         current_color = rainbow_colors[color_index]
-        
         name1_text = self.font.render("22110184 Lê Quốc Nam", True, current_color)
         name2_text = self.font.render("22110187 Lê Chí Nghĩa", True, current_color)
         self.screen.blit(name1_text, (5, 40)) 
@@ -135,13 +144,11 @@ class Game:
 
     def update(self, algorithm=None):
         if algorithm == "Q-learning":
-            # Định nghĩa kích thước state và action
             state_size = (
                 GRID_WIDTH * GRID_HEIGHT
-            )  # Kích thước state dựa trên kích thước lưới
-            action_size = 4  # 4 hành động có thể: lên, xuống, trái, phải
+            )  
+            action_size = 4  
 
-            # Sử dụng mô hình Q-learning đã được huấn luyện
             q_table = np.load("q_table.npy")
             agent = QLearning(state_size, action_size)
             agent.q_table = q_table
@@ -150,7 +157,6 @@ class Game:
             direction = [UP, DOWN, LEFT, RIGHT][action]
             self.snake.turn(direction)
         else:
-            # Chỉ tìm đường mới khi không có đường đi hoặc đã đi hết đường
             if self.current_path is None or self.path_index >= len(self.current_path) - 1:
                 start_pos = (
                     self.snake.get_head_position()[0] / GRIDSIZE,
@@ -278,10 +284,9 @@ class Game:
             if not self.update(algorithm=algo):
                 break
             moves += 1
-            # nếu tham số display game là true thì sẽ hiện UI
             if self.display_game:
                 self.draw()
-                self.clock.tick(200)
+                self.clock.tick(FPS)
 
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:

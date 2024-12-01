@@ -6,6 +6,7 @@ import numpy as np
 import pygame
 import os
 import time
+from src.constants import FPS
 
 def train():
     # Tạo đường dẫn đến thư mục models
@@ -20,23 +21,34 @@ def train():
     except:
         best_score = 0
 
+    fixed_obstacles =[(0, 0), (3, 5), (6, 10), (9, 15), (12, 2), (15, 7), (0, 12), (3, 17), (6, 4), (9, 9),
+ (12, 14), (15, 1), (0, 6), (3, 11), (6, 16), (9, 3), (12, 8), (15, 13), (0, 18), (3, 5),
+ (7, 11), (11, 17), (15, 4), (2, 10), (6, 16), (10, 3), (14, 9), (1, 15), (5, 2), (9, 8),
+ (13, 14), (0, 1), (4, 7), (8, 13), (12, 0), (16, 6), (3, 12), (7, 18), (11, 5), (15, 11)]
+
     game = Game()
+    fixed_obstacles = fixed_obstacles
+    game.obstacles.positions = [(x * GRIDSIZE, y * GRIDSIZE) for x, y in fixed_obstacles]
     size_of_state = 144  # 2 * 2 * 2 * 2 (danger) * 3 (food_dir_x) * 3 (food_dir_y)
     size_of_action = 4  # UP, DOWN, LEFT, RIGHT
     agent = QLearning(size_of_state, size_of_action)
 
     num_of_train = 1000000
-    max_steps = 100000
+    max_steps = 1000000
+
+    clock = pygame.time.Clock()  # Tạo một đối tượng Clock
 
     for episode in range(num_of_train):
         game.reset_game()
+        game.obstacles.positions = [(x * GRIDSIZE, y * GRIDSIZE) for x, y in fixed_obstacles]
+        game.food.randomize_position(game.grid, game.snake.positions, game.obstacles.positions)
         state = agent.get_state(game)
         total_reward = 0
 
         for step in range(max_steps):
             # game.draw()
             # pygame.display.flip()
-            # time.sleep(0.05)
+            # clock.tick(FPS)
 
             action = agent.get_action(state)
 
