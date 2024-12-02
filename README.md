@@ -57,6 +57,6 @@ https://www.youtube.com/watch?v=97gDXdA7kVc&t=2950s
 ![alt text](gif/image-3.png)
 
 ## Hình ảnh thực tế
-## BFS                                  A*
+## BFS----------------------------A*
 ![alt text](gif/gif.gif)
-## BACKTRACKING               SIMULATED ANNEALING
+## BACKTRACKING------------------SIMULATED ANNEALING
