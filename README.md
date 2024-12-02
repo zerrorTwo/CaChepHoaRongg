@@ -43,18 +43,20 @@ https://stackoverflow.com/questions/69585685/dfs-snake-solving-algorithm-nonetyp
 https://www.youtube.com/watch?v=97gDXdA7kVc&t=2950s
 ```
 ## GUI giao diện
-![alt text](image.png)
+![alt text](gif/image.png)
 - Nhấn bất kỳ phím nào để bắt đầu game
 - Nhấn phím `ESC` để pause game
 
 ## Giao diện khi chơi
-![alt text](image-1.png)
+![alt text](gif/image-1.png)
 
 ## Giao diện khi pause
-![alt text](image-2.png)
+![alt text](gif/image-2.png)
 
 ## Giao diện khi game over
-![alt text](image-3.png)
+![alt text](gif/image-3.png)
 
 ## Hình ảnh thực tế
+## BFS                      ## A*
 ![alt text](gif/gif.gif)
+# BACKTRACKING              ## SIMULATED ANNEALING
