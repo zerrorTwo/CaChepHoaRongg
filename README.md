@@ -4,6 +4,8 @@
 Dự án "Cá Chép Hóa Rồng" là một phiên bản nâng cao của trò chơi rắn săn mồi cổ điển, được tích hợp với thuật toán học máy Q-Learning. Con rắn trong game sẽ tự học cách di chuyển và săn mồi một cách hiệu quả thông qua quá trình huấn luyện.
 
 ## Tính năng
+- Tích hợp 4 thuật toán tìm đường: BFS, A*, BACKTRACKING, SIMULATED ANNEALING
+- Có thể tinh chỉnh Obstacle và kích thước của game
 - Thuật toán Q-Learning cho phép rắn tự học và cải thiện chiến lược chơi
 - Hệ thống lưu trữ và tải Q-table tốt nhất
 - Giao diện trực quan với pygame
@@ -42,6 +44,12 @@ cachephoarong/
 https://stackoverflow.com/questions/69585685/dfs-snake-solving-algorithm-nonetype-object-has-no-len
 https://www.youtube.com/watch?v=97gDXdA7kVc&t=2950s
 ```
+
+## Tinh chỉnh game
+```
+- Để tinh chỉnh kích thước của game, số lượng Obstacle, vị trí của chúng, các bạn có thể chỉnh sửa file `constants.py`
+```
+
 ## GUI giao diện
 ![alt text](gif/image.png)
 - Nhấn bất kỳ phím nào để bắt đầu game
