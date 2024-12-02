@@ -36,10 +36,10 @@ FOOD = 2 # chỉ số định danh trạng thái thức ăn
 SNAKE_HEAD = 3 # chỉ số định danh trạng thái đầu con rắn
 SNAKE_TAIL = 4 # chỉ số định danh trạng thái đuôi con rắn
 
-OBSTACLE = 40 # số lương vật cản
+OBSTACLE = 80 # số lương vật cản
 
 # FPS
-FPS = 60
+FPS = 300
 
 # Số lần so sánh
 NUM_COMPARE = 10

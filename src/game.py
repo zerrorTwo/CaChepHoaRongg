@@ -25,8 +25,8 @@ class Game:
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont("monospace", 20, bold=True)
         self.display_game = display_game
-        self.current_path = None  # Thêm biến để lưu đường đi hiện tại
-        self.path_index = 0      # Thêm biến để theo dõi vị trí hiện tại trong đường đi
+        self.currPath = None  # Thêm biến để lưu đường đi hiện tại
+        self.pathIndex = 0      # Thêm biến để theo dõi vị trí hiện tại trong đường đi
 
         self.reset_game()
 
@@ -56,14 +56,13 @@ class Game:
                 if not self.handle_events():
                     break
                 if not self.update(algorithm):
-                    # Hiển thị "Game Over" lên UI với kích thước font lớn hơn
                     self.surface.fill(BLACK)
                     game_over_font = pygame.font.SysFont("monospace", 40, bold=True)  # Thay đổi kích thước font
                     game_over_text = game_over_font.render("Game Over!!", True, (255, 0, 0))
                     self.screen.blit(game_over_text, (SCREEN_WIDTH // 2 - game_over_text.get_width() // 2, SCREEN_HEIGHT // 2 - 20))
-                    continue_font = pygame.font.SysFont("monospace", 30, bold=True)
-                    continue_text = continue_font.render("Press Space to Continue", True, (255, 255, 255))
-                    self.screen.blit(continue_text, (SCREEN_WIDTH // 2 - continue_text.get_width() // 2, SCREEN_HEIGHT // 2 + 20))
+                    c_font = pygame.font.SysFont("monospace", 30, bold=True)
+                    c_text = c_font.render("Press Space to Continue", True, (255, 255, 255))
+                    self.screen.blit(c_text, (SCREEN_WIDTH // 2 - c_text.get_width() // 2, SCREEN_HEIGHT // 2 + 20))
                     pygame.display.update()
                     space = True
                     while space:
@@ -157,7 +156,7 @@ class Game:
             direction = [UP, DOWN, LEFT, RIGHT][action]
             self.snake.turn(direction)
         else:
-            if self.current_path is None or self.path_index >= len(self.current_path) - 1:
+            if self.currPath is None or self.pathIndex >= len(self.currPath) - 1:
                 start_pos = (
                     self.snake.get_head_position()[0] / GRIDSIZE,
                     self.snake.get_head_position()[1] / GRIDSIZE,
@@ -169,38 +168,38 @@ class Game:
 
                 # Tìm đường đi theo thuật toán được chọn
                 if algorithm == "A*":
-                    self.current_path = astar.a_star(
+                    self.currPath = astar.a_star(
                         start_pos, goal_pos, self.grid, self.obstacles.positions
                     )
                 elif algorithm == "BFS":
-                    self.current_path = bfs.bfs(
+                    self.currPath = bfs.bfs(
                         start_pos, goal_pos, self.grid, self.obstacles.positions
                     )
                 elif algorithm == "BACKTRACKING":
-                    self.current_path = backtracking.backtracking(
+                    self.currPath = backtracking.backtracking(
                         start_pos, goal_pos, self.grid, self.obstacles.positions
                     )
                 elif algorithm == "SA":
-                    self.current_path = simulated_annealing.simulated_annealing(
+                    self.currPath = simulated_annealing.simulated_annealing(
                         start_pos, goal_pos, self.grid, self.obstacles.positions
                     )
                 
-                self.path_index = 0
+                self.pathIndex = 0
                 
-                if self.current_path is None or len(self.current_path) < 2:
+                if self.currPath is None or len(self.currPath) < 2:
                     return False
 
-            # Đảm bảo path_index không vượt quá độ dài của current_path
-            if self.path_index < len(self.current_path) - 1:
+            # Đảm bảo pathIndex không vượt quá độ dài của currPath
+            if self.pathIndex < len(self.currPath) - 1:
                 current_pos = (
                     self.snake.get_head_position()[0] / GRIDSIZE,
                     self.snake.get_head_position()[1] / GRIDSIZE,
                 )
-                next_pos = self.current_path[self.path_index + 1]
+                next_pos = self.currPath[self.pathIndex + 1]
                 direction = (next_pos[0] - current_pos[0], next_pos[1] - current_pos[1])
                 
                 self.snake.turn(direction)
-                self.path_index += 1
+                self.pathIndex += 1
 
         if not self.snake.move(self.grid, self.obstacles.positions):
             return False
@@ -211,7 +210,7 @@ class Game:
             self.food.randomize_position(
                 self.grid, self.snake.positions, self.obstacles.positions
             )
-            self.current_path = None  # Reset đường đi khi ăn được thức ăn
+            self.currPath = None  # Reset đường đi khi ăn được thức ăn
             
         return True
     
