@@ -39,7 +39,7 @@ SNAKE_TAIL = 4 # chỉ số định danh trạng thái đuôi con rắn
 OBSTACLE = 40 # số lương vật cản
 
 # FPS
-FPS = 30
+FPS = 60
 
 # Số lần so sánh
 NUM_COMPARE = 10

@@ -69,3 +69,6 @@ https://www.youtube.com/watch?v=97gDXdA7kVc&t=2950s
 ## BFS----------------------------A*
 ![alt text](gif/gif.gif)
 ## BACKTRACKING------------------SIMULATED ANNEALING
+
+## Hình ảnh khi chạy Q-Learning
+![alt text](gif/qlearning.gif)
